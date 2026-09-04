@@ -161,6 +161,154 @@
       .nav-item .nav-label { font-size: 7px !important; }
     }
 
+
+
+    /* Header alignment — calm compact */
+    #screen-ghar > header.glass-header {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+    #dynamic-greeting.gs-greeting,
+    #dynamic-greeting {
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.02em;
+      line-height: 1.3 !important;
+      color: #2D2A26 !important;
+      -webkit-text-fill-color: #2D2A26 !important;
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+      max-width: 100%;
+    }
+    #mg-greeting-extra.gs-greeting-extra,
+    #mg-greeting-extra {
+      font-size: 10px !important;
+      line-height: 1.3 !important;
+      margin-top: 2px !important;
+    }
+    .gs-header-meta {
+      line-height: 1.35 !important;
+    }
+    #date-line, #tithi-line, #weather-city-pill {
+      font-size: 10px !important;
+    }
+    /* avatar size match compact header */
+    #screen-ghar header .w-10.h-10.rounded-full {
+      box-shadow:
+        0 0 0 2px rgba(255, 179, 71, 0.5),
+        0 4px 12px rgba(255, 153, 51, 0.2) !important;
+    }
+
+    /* ── Calm 5-tab nav ── */
+    .nav-dock {
+      height: 72px !important;
+      padding: 0 10px !important;
+      justify-content: space-between !important;
+    }
+    .nav-item {
+      flex: 1 1 0;
+      max-width: 72px;
+      margin: 0 auto;
+    }
+    .nav-item.active {
+      background: linear-gradient(135deg, rgba(255,153,51,0.14), rgba(255,107,157,0.1)) !important;
+    }
+    .nav-item.active .nav-icon { color: #C65D3A !important; }
+    .nav-item.active .nav-label { color: #C65D3A !important; font-weight: 700; }
+    .nav-item.active .nav-dot { background: #C65D3A !important; }
+
+    /* ── Expandable home subsections ── */
+    .gs-sub {
+      border-radius: 20px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 2px 12px rgba(45,42,38,0.04);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .gs-sub-head {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; padding: 12px 14px;
+      background: transparent; border: none; cursor: pointer;
+      text-align: left; color: #2D2A26;
+    }
+    .gs-sub-head:active { background: rgba(198,93,58,0.06); }
+    .gs-sub-title { flex: 1; font-size: 13px; font-weight: 700; letter-spacing: -0.01em; }
+    .gs-sub-meta { font-size: 10px; font-weight: 600; color: #6B635A; }
+    .gs-sub-chevron {
+      font-size: 12px; color: #6B635A; transition: transform 0.25s ease;
+    }
+    .gs-sub.open .gs-sub-chevron { transform: rotate(180deg); }
+    .gs-sub-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease;
+      padding: 0 12px;
+    }
+    .gs-sub.open .gs-sub-body {
+      max-height: 2000px;
+      padding-bottom: 12px;
+    }
+    .gs-hub-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    }
+    .gs-hub-card {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+      padding: 12px; border-radius: 16px; text-align: left;
+      background: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 2px 10px rgba(45,42,38,0.05);
+      font-size: 12px; font-weight: 700; color: #2D2A26;
+      cursor: pointer; transition: transform 0.15s ease;
+    }
+    .gs-hub-card:active { transform: scale(0.97); }
+    .gs-hub-card span.emoji { font-size: 20px; }
+    .gs-hub-card span.sub { font-size: 10px; font-weight: 500; color: #6B635A; }
+
+    /* Sub-tab switcher for merged screens */
+    .gs-subtabs {
+      display: flex; gap: 6px; padding: 8px 12px;
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(251,247,240,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .gs-subtab {
+      flex: 1; padding: 8px 10px; border-radius: 12px; border: none;
+      font-size: 12px; font-weight: 700; color: #6B635A;
+      background: rgba(107,99,90,0.08); cursor: pointer;
+    }
+    .gs-subtab.active {
+      background: linear-gradient(135deg, rgba(198,93,58,0.15), rgba(232,163,61,0.12));
+      color: #C65D3A;
+    }
+
+    /* Hide floating mic on Home (hero mic is enough) */
+    body.gs-on-home #saheli-mic-float { opacity: 0; pointer-events: none !important; }
+    body:not(.gs-on-home) #saheli-mic-float { opacity: 1; }
+
+    /* Header alignment polish */
+    #screen-ghar > header.glass-header .flex.items-center.gap-3 {
+      align-items: flex-start;
+    }
+    #screen-ghar > header.glass-header h1 {
+      line-height: 1.25 !important;
+    }
+
+    /* More menu sheet */
+    #gs-more-overlay {
+      position: fixed; inset: 0; z-index: 88;
+      background: rgba(45,42,38,0.45);
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    #gs-more-overlay.open { opacity: 1; pointer-events: auto; }
+    #gs-more-sheet {
+      width: 100%; max-width: 480px; max-height: 80dvh;
+      background: #FBF7F0; border-radius: 28px 28px 0 0;
+      transform: translateY(100%); transition: transform 0.38s cubic-bezier(0.32,0.72,0,1);
+      overflow-y: auto; padding: 12px 16px 28px;
+    }
+    #gs-more-overlay.open #gs-more-sheet { transform: translateY(0); }
+
     /* ── Saheli Mic float (sm-) ── */
     #saheli-mic-float {
       position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%);
@@ -2930,34 +3078,38 @@
          ═══════════════════════════════════════ -->
         <main id="screen-ghar" class="screen active flex-1 overflow-y-auto pb-28">
 
-      <!-- 1. STICKY GLASS HEADER -->
-      <header class="sticky top-0 z-30 glass-header px-4 pt-4 pb-3">
-        <div class="flex items-center gap-3">
-          <div class="relative shrink-0">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-marigold to-terracotta flex items-center justify-center text-white font-bold text-lg shadow-soft ring-[3px] ring-[#E8A33D]/80 ring-offset-2 ring-offset-ivory">P</div>
-            <span class="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-mehendi rounded-full border-2 border-ivory" title="Online"></span>
+      <!-- 1. STICKY GLASS HEADER — calm aligned -->
+      <header class="sticky top-0 z-30 glass-header px-4 pt-3 pb-2.5">
+        <div class="flex items-start gap-2.5">
+          <div class="relative shrink-0 mt-0.5">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-marigold to-terracotta flex items-center justify-center text-white font-bold text-sm shadow-soft ring-2 ring-[#E8A33D]/70 ring-offset-1 ring-offset-ivory" id="header-avatar-letter">A</div>
+            <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-mehendi rounded-full border-2 border-ivory" title="Online"></span>
           </div>
           <div class="flex-1 min-w-0">
-            <h1 id="dynamic-greeting" class="text-lg font-bold text-charcoal leading-tight truncate" role="button" tabindex="0" title="Tap to refresh">Suprabhat, Priya Ji 🙏</h1>
-            <p id="mg-greeting-extra" class="text-[11px] text-warm-muted font-medium mt-0.5 leading-snug"></p>
-            <p id="date-line" class="text-[11px] text-warm-muted font-medium mt-0.5">Wednesday, 2 September · बुधवार</p>
-            <p id="tithi-line" class="text-[10px] text-terracotta font-semibold mt-0.5 flex items-center gap-1">
-              <span aria-hidden="true">🕉️</span>
-              <span>Bhadrapad Shukla Dashami</span>
-            </p>
-          </div>
-          <div class="flex flex-col items-end gap-1.5 shrink-0">
-            <div class="flex items-center gap-1.5">
-              <div class="flex items-center gap-1 glass rounded-full px-2.5 py-1 shadow-card">
-                <span class="text-sm" aria-hidden="true">⛅</span>
-                <span class="text-xs font-bold text-charcoal" id="weather-city-pill">32°C</span>
+            <div class="flex items-start justify-between gap-2">
+              <h1 id="dynamic-greeting" class="gs-greeting text-[15px] font-bold text-charcoal leading-snug" role="button" tabindex="0" title="Tap to refresh">Shubh Ratri, Ajita Ji</h1>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" id="saheli-mode-toggle" class="w-8 h-8 rounded-full glass flex items-center justify-center shadow-card active:scale-95 text-sm" aria-label="Saheli Mode" aria-pressed="false" title="Saheli Mode">🎙️</button>
+                <button type="button" class="settings-gear-btn w-8 h-8 rounded-full glass flex items-center justify-center shadow-card active:scale-95" aria-label="Settings"><span class="text-sm">⚙️</span></button>
               </div>
-              <button type="button" id="saheli-mode-toggle" class="w-9 h-9 rounded-full glass flex items-center justify-center shadow-card active:scale-95 text-sm" aria-label="Saheli Mode" aria-pressed="false" title="Saheli Mode">🎙️</button>
-              <button type="button" class="settings-gear-btn w-9 h-9 rounded-full glass flex items-center justify-center shadow-card active:scale-95" aria-label="Settings"><span class="text-base">⚙️</span></button>
             </div>
-            <div class="flex items-center gap-1 rounded-full px-2 py-0.5 border border-marigold/40 bg-marigold/15">
-              <span class="w-2 h-2 rounded-full bg-marigold"></span>
-              <span class="text-[9px] font-bold text-charcoal">Kesari</span>
+            <p id="mg-greeting-extra" class="gs-greeting-extra text-[10px] text-warm-muted font-medium leading-snug mt-0.5 truncate"></p>
+            <div class="gs-header-meta flex flex-wrap items-center gap-x-1.5 gap-y-0.5 mt-1 text-[10px] text-warm-muted font-medium leading-none">
+              <span id="date-line" class="whitespace-nowrap">Friday, 4 September · शुक्रवार</span>
+              <span class="text-charcoal/25" aria-hidden="true">·</span>
+              <span id="tithi-line" class="text-terracotta font-semibold whitespace-nowrap inline-flex items-center gap-0.5">
+                <span aria-hidden="true">🕉️</span>
+                <span>Bhadrapad Shukla Dashami</span>
+              </span>
+              <span class="text-charcoal/25" aria-hidden="true">·</span>
+              <span class="inline-flex items-center gap-0.5 whitespace-nowrap">
+                <span aria-hidden="true">⛅</span>
+                <span id="weather-city-pill" class="font-semibold text-charcoal">32°C</span>
+              </span>
+              <span class="inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 border border-marigold/35 bg-marigold/12 text-[9px] font-bold text-charcoal whitespace-nowrap">
+                <span class="w-1.5 h-1.5 rounded-full bg-marigold"></span>
+                Kesari
+              </span>
             </div>
           </div>
         </div>
@@ -3041,6 +3193,24 @@
               <p class="text-[11px] font-bold text-charcoal">Sukoon</p>
               <p class="text-[10px] text-warm-muted" id="metric-sukoon-label">Aaj abhi pending ❤️</p>
             </div>
+          </div>
+        </section>
+
+        <!-- ═══ Calm hub: everything else one tap away ═══ -->
+        <section class="animate-in delay-1 px-0" aria-label="Quick access">
+          <div class="flex items-center justify-between mb-2.5">
+            <h2 class="text-sm font-bold text-charcoal">✨ Jaldi pahunchhein</h2>
+            <button type="button" id="gs-open-more" class="text-[11px] font-bold text-terracotta">Sab dekhein →</button>
+          </div>
+          <div class="gs-hub-grid">
+            <button type="button" class="gs-hub-card" data-nav="parivar"><span class="emoji">👨‍👩‍👧</span>Parivar<span class="sub">Kids · elders · PTM</span></button>
+            <button type="button" class="gs-hub-card" data-nav="saheliyan"><span class="emoji">👥</span>Saheliyan<span class="sub">Community · support</span></button>
+            <button type="button" class="gs-hub-card" data-nav="seekho-kamai"><span class="emoji">💼</span>Seekho &amp; Kamai<span class="sub">Skills · earning</span></button>
+            <button type="button" class="gs-hub-card" data-gs-action="prayer"><span class="emoji">🙏</span>Prarthana<span class="sub">Aarti · faith</span></button>
+            <button type="button" class="gs-hub-card" data-gs-action="awaaz"><span class="emoji">📢</span>Meri Awaaz<span class="sub">Rights · docs</span></button>
+            <button type="button" class="gs-hub-card" data-gs-action="sos"><span class="emoji">🆘</span>Safety<span class="sub">SOS · helplines</span></button>
+            <button type="button" class="gs-hub-card" data-gs-action="settings"><span class="emoji">⚙️</span>Settings<span class="sub">Profile · family</span></button>
+            <button type="button" class="gs-hub-card" data-nav="sukoon"><span class="emoji">🌸</span>Sukoon<span class="sub">Me-time · health</span></button>
           </div>
         </section>
 
@@ -7142,12 +7312,13 @@
           <div class="sm-transcript" id="sm-transcript" aria-live="polite">“Saheli, aaj kya banaye?”</div>
           <p class="text-[10px] text-warm-muted font-medium">Quick commands:</p>
           <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1" id="sm-chips">
+            <button type="button" class="sm-chip" data-sm-cmd="birthday">🎂 Kal beti ka birthday</button>
+            <button type="button" class="sm-chip" data-sm-cmd="ptm">🎓 PTM + lunch plan</button>
             <button type="button" class="sm-chip" data-sm-cmd="recipe">🍳 Aaj kya banaye?</button>
             <button type="button" class="sm-chip" data-sm-cmd="ration">🛒 Ration list dikha</button>
             <button type="button" class="sm-chip" data-sm-cmd="reminder">⏰ Reminder set karo</button>
-            <button type="button" class="sm-chip" data-sm-cmd="budget">💰 Budget check karo</button>
             <button type="button" class="sm-chip" data-sm-cmd="sukoon">🧘 Sukoon time</button>
-            <button type="button" class="sm-chip" data-sm-cmd="call">📞 Mummy ko call</button>
+            <button type="button" class="sm-chip" data-sm-cmd="haan">✅ Haan</button>
           </div>
           <button type="button" class="sm-listen-btn" id="sm-listen-btn" aria-label="Start listening">🎤 Bolna shuru karein</button>
           <input type="text" id="sm-text-fallback" class="settings-input hidden" placeholder="Type karein: Saheli, ration list dikha..." aria-label="Voice fallback text input" />
@@ -7160,41 +7331,52 @@
       </div>
     </div>
 
-    <!-- Bottom Nav — Thumb-zone glassmorphism dock -->
+
+    <!-- More menu (features outside 5 tabs) -->
+    <div id="gs-more-overlay" aria-hidden="true">
+      <div id="gs-more-sheet" role="dialog" aria-label="More features">
+        <div class="settings-drag-handle"></div>
+        <h3 class="text-base font-bold text-charcoal mb-1 px-1">Sab features</h3>
+        <p class="text-[11px] text-warm-muted mb-3 px-1">Bottom nav mein 5 tabs — baaki yahan se 🌸</p>
+        <div class="gs-hub-grid mb-3">
+          <button type="button" class="gs-hub-card" data-nav="parivar"><span class="emoji">👨‍👩‍👧</span>Parivar<span class="sub">Family care</span></button>
+          <button type="button" class="gs-hub-card" data-nav="saheliyan"><span class="emoji">👥</span>Community<span class="sub">Saheliyan</span></button>
+          <button type="button" class="gs-hub-card" data-nav="kamai"><span class="emoji">💼</span>Kamai<span class="sub">Earn &amp; grow</span></button>
+          <button type="button" class="gs-hub-card" data-nav="seekho"><span class="emoji">📚</span>Seekho<span class="sub">Learn skills</span></button>
+          <button type="button" class="gs-hub-card" data-gs-action="prayer"><span class="emoji">🙏</span>Prarthana<span class="sub">Daily puja</span></button>
+          <button type="button" class="gs-hub-card" data-gs-action="awaaz"><span class="emoji">📢</span>Meri Awaaz<span class="sub">Legal · vault</span></button>
+          <button type="button" class="gs-hub-card" data-gs-action="sos"><span class="emoji">🆘</span>SOS Safety<span class="sub">Emergency</span></button>
+          <button type="button" class="gs-hub-card" data-gs-action="settings"><span class="emoji">⚙️</span>Settings<span class="sub">Profile</span></button>
+        </div>
+        <button type="button" id="gs-more-close" class="w-full py-3 rounded-2xl bg-terracotta text-white text-sm font-bold">Band karein</button>
+      </div>
+    </div>
+
+    <!-- Bottom Nav — Calm 5-tab dock -->
     <nav class="fixed bottom-0 left-0 right-0 z-[997]" aria-label="Main navigation">
       <div class="nav-dock">
-        <button type="button" class="nav-item active flex flex-col items-center justify-center min-w-0 flex-1" data-nav="ghar" aria-current="page" aria-label="Ghar tab">
+        <button type="button" class="nav-item active flex flex-col items-center justify-center min-w-0 flex-1" data-nav="ghar" aria-current="page" aria-label="Home">
           <span class="nav-icon text-[22px] leading-none" aria-hidden="true">🏠</span>
-          <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Ghar</span>
+          <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Home</span>
           <span class="nav-dot" aria-hidden="true"></span>
         </button>
-        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="rasoi" aria-label="Rasoi tab">
+        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="rasoi" aria-label="Rasoi">
           <span class="nav-icon text-[22px] leading-none" aria-hidden="true">🍳</span>
           <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Rasoi</span>
           <span class="nav-dot" aria-hidden="true"></span>
         </button>
-        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="parivar" aria-label="Parivar tab">
-          <span class="nav-icon text-[22px] leading-none" aria-hidden="true">👨‍👩‍👧</span>
-          <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Parivar</span>
-          <span class="nav-dot" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="kamai" aria-label="Kamai tab">
+        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="seekho-kamai" aria-label="Seekho Kamai">
           <span class="nav-icon text-[22px] leading-none" aria-hidden="true">💼</span>
-          <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Kamai</span>
+          <span class="nav-label text-[9px] font-semibold text-warm-muted truncate">Seekho-Kamai</span>
           <span class="nav-dot" aria-hidden="true"></span>
         </button>
-        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="seekho" aria-label="Seekho tab">
-          <span class="nav-icon text-[22px] leading-none" aria-hidden="true">📚</span>
-          <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Seekho</span>
-          <span class="nav-dot" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="saheliyan" aria-label="Saheliyan tab">
+        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="saheli" aria-label="Saheli">
           <span class="nav-icon text-[22px] leading-none" aria-hidden="true">👥</span>
-          <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Saheliyan</span>
+          <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Saheli</span>
           <span class="nav-dot" aria-hidden="true"></span>
         </button>
-        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="sukoon" aria-label="Sukoon tab">
-          <span class="nav-icon text-[22px] leading-none" aria-hidden="true">🧘‍♀️</span>
+        <button type="button" class="nav-item flex flex-col items-center justify-center min-w-0 flex-1" data-nav="sukoon" aria-label="Sukoon">
+          <span class="nav-icon text-[22px] leading-none" aria-hidden="true">🌸</span>
           <span class="nav-label text-[10px] font-semibold text-warm-muted truncate">Sukoon</span>
           <span class="nav-dot" aria-hidden="true"></span>
         </button>
@@ -7256,11 +7438,68 @@
       };
       const navItems = document.querySelectorAll('.nav-item');
 
+      // Calm IA: map secondary routes → primary screens + subtabs
+      const NAV_ALIASES = {
+        'seekho-kamai': 'kamai',
+        'saheli': 'saheliyan',
+        'parivar': 'parivar',
+        'kamai': 'kamai',
+        'seekho': 'seekho',
+        'saheliyan': 'saheliyan',
+        'ghar': 'ghar',
+        'home': 'ghar',
+        'rasoi': 'rasoi',
+        'sukoon': 'sukoon'
+      };
+      const NAV_HIGHLIGHT = {
+        ghar: 'ghar',
+        rasoi: 'rasoi',
+        kamai: 'seekho-kamai',
+        seekho: 'seekho-kamai',
+        'seekho-kamai': 'seekho-kamai',
+        saheliyan: 'saheli',
+        parivar: 'saheli',
+        saheli: 'saheli',
+        sukoon: 'sukoon'
+      };
+
+      function ensureSubtabs() {
+        // Seekho-Kamai subtabs on kamai + seekho screens
+        [['screen-kamai', 'kamai'], ['screen-seekho', 'seekho']].forEach(([sid, which]) => {
+          const sc = document.getElementById(sid);
+          if (!sc || sc.querySelector('.gs-subtabs')) return;
+          const bar = document.createElement('div');
+          bar.className = 'gs-subtabs';
+          bar.innerHTML = '<button type="button" class="gs-subtab' + (which==='kamai'?' active':'') + '" data-gs-sub="kamai">💼 Kamai</button>' +
+            '<button type="button" class="gs-subtab' + (which==='seekho'?' active':'') + '" data-gs-sub="seekho">📚 Seekho</button>';
+          sc.insertBefore(bar, sc.firstChild);
+          bar.querySelectorAll('[data-gs-sub]').forEach(b => {
+            b.addEventListener('click', () => goTo(b.getAttribute('data-gs-sub')));
+          });
+        });
+        // Saheli subtabs: community + family
+        [['screen-saheliyan', 'saheliyan'], ['screen-parivar', 'parivar']].forEach(([sid, which]) => {
+          const sc = document.getElementById(sid);
+          if (!sc || sc.querySelector('.gs-subtabs')) return;
+          const bar = document.createElement('div');
+          bar.className = 'gs-subtabs';
+          bar.innerHTML = '<button type="button" class="gs-subtab' + (which==='saheliyan'?' active':'') + '" data-gs-sub="saheliyan">👥 Community</button>' +
+            '<button type="button" class="gs-subtab' + (which==='parivar'?' active':'') + '" data-gs-sub="parivar">👨‍👩‍👧 Parivar</button>';
+          sc.insertBefore(bar, sc.firstChild);
+          bar.querySelectorAll('[data-gs-sub]').forEach(b => {
+            b.addEventListener('click', () => goTo(b.getAttribute('data-gs-sub')));
+          });
+        });
+      }
+      ensureSubtabs();
+
       function goTo(name) {
+        const requested = name;
+        const resolved = NAV_ALIASES[name] || name;
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         Object.keys(screens).forEach(k => {
           if (!screens[k]) return;
-          if (k === name) {
+          if (k === resolved) {
             screens[k].classList.add('active');
             if (!reduceMotion) {
               screens[k].classList.remove('page-exit');
@@ -7271,18 +7510,28 @@
             screens[k].classList.remove('active', 'page-enter');
           }
         });
+        const highlight = NAV_HIGHLIGHT[requested] || NAV_HIGHLIGHT[resolved] || resolved;
         navItems.forEach(btn => {
-          const isActive = btn.getAttribute('data-nav') === name;
+          const isActive = btn.getAttribute('data-nav') === highlight;
           btn.classList.toggle('active', isActive);
           if (isActive) btn.setAttribute('aria-current', 'page');
           else btn.removeAttribute('aria-current');
         });
+        // Sync subtabs active state
+        document.querySelectorAll('.gs-subtab').forEach(b => {
+          const sub = b.getAttribute('data-gs-sub');
+          b.classList.toggle('active', sub === resolved);
+        });
+        document.body.classList.toggle('gs-on-home', resolved === 'ghar');
         const rasoiFab = document.getElementById('rasoi-fab');
-        if (rasoiFab) rasoiFab.style.display = name === 'rasoi' ? 'flex' : 'none';
+        if (rasoiFab) rasoiFab.style.display = resolved === 'rasoi' ? 'flex' : 'none';
         const parivarFab = document.getElementById('parivar-fab');
-        if (parivarFab) parivarFab.style.display = name === 'parivar' ? 'flex' : 'none';
+        if (parivarFab) parivarFab.style.display = resolved === 'parivar' ? 'flex' : 'none';
         try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {}
       }
+      // initial home class
+      document.body.classList.add('gs-on-home');
+      window.goTo = goTo;
 
       navItems.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -15308,6 +15557,1001 @@
           }
         } catch (e) {}
       }, 2000);
+
+
+      // ═══════════════════════════════════════════════════════════
+      // SAHELI INTELLIGENCE LAYER (SIL) + CONVERSATIONAL VOICE AI
+      // Architecture: State → Intelligence → Action Executor → Voice
+      // ═══════════════════════════════════════════════════════════
+      (function initSaheliIntelligenceAndVoice() {
+        const SIL_VERSION = '2.0';
+        const STATE_KEY = 'gharsaheli_sil_state';
+        const CONV_KEY = 'gharsaheli_sil_conversation';
+
+        // ─── Centralized State (aggregates profile + domain data) ───
+        function defaultState() {
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          const tISO = tomorrow.toISOString().slice(0, 10);
+          return {
+            profile: {
+              name: 'Priya',
+              city: 'Delhi',
+              lang: 'hi-IN',
+              diet: 'vegetarian',
+              faith: 'hindu',
+              allergies: []
+            },
+            family: {
+              husband: { name: 'Rahul' },
+              children: [
+                { id: 'rohan', name: 'Rohan', age: 10, school: 'DPS', gender: 'boy' },
+                { id: 'aarohee', name: 'Aarohee', age: 7, school: 'DPS', gender: 'girl' }
+              ],
+              elders: [{ name: 'Mummy', relation: 'mother-in-law' }]
+            },
+            calendar: {
+              events: [
+                { id: 'ptm-rohan', title: 'Rohan PTM', date: tISO, time: '16:00', person: 'Rohan', type: 'school' },
+                { id: 'evening-event', title: 'Family evening event', date: new Date().toISOString().slice(0, 10), time: '19:00', type: 'family' }
+              ]
+            },
+            meals: {
+              lunch: null,
+              dinner: null,
+              planned: { breakfast: true, lunch: false, dinner: false }
+            },
+            fridge: {
+              items: [
+                { name: 'Paneer', qty: '200g', expiresInDays: 1 },
+                { name: 'Tomatoes', qty: 1, low: true },
+                { name: 'Doodh', qty: '500ml', urgent: true },
+                { name: 'Pyaaz', qty: 3 },
+                { name: 'Dahi', qty: '200g' }
+              ]
+            },
+            grocery: {
+              list: [
+                { name: 'Doodh', qty: '2L', urgent: true },
+                { name: 'Chawal', qty: '1kg' }
+              ]
+            },
+            expenses: { budgetLeft: 4200, alerts: [] },
+            wellbeing: { mood: null, stress: 'medium', sukoonTaken: false, cycleDay: null },
+            weather: { city: 'Delhi', tomorrow: 'rain', today: 'cloudy', temp: 28 },
+            reminders: [],
+            preferences: { voiceLang: 'hi-IN', saheliTone: 'warm' },
+            meta: { lastProactiveAt: 0, silVersion: SIL_VERSION }
+          };
+        }
+
+        function loadSILState() {
+          try {
+            const raw = localStorage.getItem(STATE_KEY);
+            if (raw) {
+              const s = JSON.parse(raw);
+              // merge profile name from main profile if present
+              try {
+                const p = JSON.parse(localStorage.getItem('gharSaheliProfile') || '{}');
+                if (p.name) s.profile.name = p.name;
+                if (p.city) s.profile.city = p.city;
+                if (p.diet) s.profile.diet = p.diet;
+                if (p.kids && p.kids.length) {
+                  s.family.children = p.kids.map((k, i) => ({
+                    id: (k.name || 'kid' + i).toLowerCase().replace(/\s+/g, ''),
+                    name: k.name || 'Child',
+                    age: parseInt(k.age, 10) || 8,
+                    school: k.school || '',
+                    gender: /aarohee|anaya|girl|beti|daughter/i.test(k.name || '') ? 'girl' : 'boy'
+                  }));
+                }
+              } catch (e) {}
+              return s;
+            }
+          } catch (e) {}
+          const s = defaultState();
+          saveSILState(s);
+          return s;
+        }
+
+        function saveSILState(s) {
+          try { localStorage.setItem(STATE_KEY, JSON.stringify(s)); } catch (e) {}
+        }
+
+        let silState = loadSILState();
+        window.GharSaheliState = silState;
+        window.GharSaheliSaveState = () => saveSILState(silState);
+
+        // ─── Action Executor ───
+        const ActionExecutor = {
+          setMeal(mealType, dish) {
+            silState.meals[mealType] = dish;
+            silState.meals.planned[mealType] = true;
+            saveSILState(silState);
+            const status = document.getElementById('metric-meals-status');
+            const label = document.getElementById('metric-meals-label');
+            if (status) status.textContent = '✓ set';
+            if (label) label.textContent = dish;
+            showToast('🍽️ ' + mealType + ': ' + dish);
+            return true;
+          },
+          addGrocery(name, qty) {
+            const item = { name, qty: qty || '1', urgent: /tomato|tamatar|doodh/i.test(name) };
+            silState.grocery.list.push(item);
+            // de-dupe by name
+            const seen = new Set();
+            silState.grocery.list = silState.grocery.list.filter(g => {
+              const k = g.name.toLowerCase();
+              if (seen.has(k)) return false;
+              seen.add(k);
+              return true;
+            });
+            saveSILState(silState);
+            const st = document.getElementById('metric-grocery-status');
+            if (st) st.textContent = silState.grocery.list.length + ' items';
+            showToast('🛒 ' + name + (qty ? ' — ' + qty : '') + ' list mein');
+            return true;
+          },
+          addReminder(title, whenLabel, timeHint) {
+            const r = { id: 'r-' + Date.now(), title, when: whenLabel || 'today', time: timeHint || '', created: Date.now() };
+            silState.reminders.push(r);
+            saveSILState(silState);
+            showToast('🔔 Reminder: ' + title + (timeHint ? ' @ ' + timeHint : ''));
+            return true;
+          },
+          addEvent(title, dateISO, time, type) {
+            const ev = { id: 'ev-' + Date.now(), title, date: dateISO, time: time || '', type: type || 'personal' };
+            silState.calendar.events.push(ev);
+            saveSILState(silState);
+            showToast('📅 Event: ' + title);
+            return true;
+          },
+          noteWeatherOutfit() {
+            if (silState.weather.tomorrow === 'rain') {
+              showToast('☔ Kal baarish — umbrella + closed shoes ready rakhein');
+            }
+            return true;
+          },
+          setMood(mood) {
+            silState.wellbeing.mood = mood;
+            try {
+              const hist = JSON.parse(localStorage.getItem('gharsaheli_mood_history') || '[]');
+              hist.push({ mood, at: Date.now() });
+              localStorage.setItem('gharsaheli_mood_history', JSON.stringify(hist.slice(-50)));
+            } catch (e) {}
+            saveSILState(silState);
+            return true;
+          }
+        };
+        window.SaheliActions = ActionExecutor;
+
+        // ─── Intelligence Layer ───
+        const SaheliIntelligence = {
+          analyze() {
+            const insights = [];
+            const today = new Date().toISOString().slice(0, 10);
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tISO = tomorrow.toISOString().slice(0, 10);
+
+            // PTM + rain + fridge + lunch
+            const ptm = silState.calendar.events.find(e =>
+              /ptm/i.test(e.title) && (e.date === tISO || e.date === today)
+            );
+            const paneer = silState.fridge.items.find(i => /paneer/i.test(i.name));
+            const tomatoes = silState.fridge.items.find(i => /tomato|tamatar/i.test(i.name));
+            const lunchUnset = !silState.meals.lunch;
+            const rain = silState.weather.tomorrow === 'rain' || /rain|baarish/i.test(String(silState.weather.tomorrow));
+
+            if (ptm && paneer && lunchUnset) {
+              const child = ptm.person || 'Rohan';
+              insights.push({
+                id: 'ptm-paneer-lunch',
+                priority: 10,
+                icon: '🎓',
+                text: 'Aaj ' + child + ' ka PTM hai, baarish bhi expected hai aur fridge mein paneer hai. Main lunch simple kar deti hoon — paneer bhurji + roti. Grocery list se tomatoes add kar diye (kal 4 chahiye), aur PTM ke liye reminder 3:30 PM kar diya. Aap bas uniform nikaal ke ready rakhein ❤️',
+                short: child + ' PTM + paneer lunch + tomatoes + reminder',
+                actions: [
+                  () => ActionExecutor.setMeal('lunch', 'Paneer Bhurji + Roti'),
+                  () => ActionExecutor.addGrocery('Tomatoes', '4'),
+                  () => ActionExecutor.addReminder(child + ' PTM — uniform ready', 'tomorrow', '15:30'),
+                  () => ActionExecutor.noteWeatherOutfit()
+                ]
+              });
+            }
+
+            // Birthday proximity (for voice demo readiness)
+            const bdayChild = silState.family.children.find(c => /aarohee|anaya|beti/i.test(c.name));
+            if (bdayChild) {
+              insights.push({
+                id: 'bday-ready-' + bdayChild.id,
+                priority: 5,
+                icon: '🎂',
+                text: 'Kal ' + bdayChild.name + ' ka birthday ho sakta hai — cake, balloons, return gifts list ready rakhein? ❤️',
+                short: bdayChild.name + ' birthday prep',
+                actions: []
+              });
+            }
+
+            // Low fridge
+            const low = silState.fridge.items.filter(i => i.low || i.urgent);
+            if (low.length && !insights.find(x => x.id === 'ptm-paneer-lunch')) {
+              insights.push({
+                id: 'fridge-low',
+                priority: 6,
+                icon: '🧊',
+                text: low.map(i => i.name).join(', ') + ' kam hai. Grocery list update karoon?',
+                short: 'Fridge low items',
+                actions: low.map(i => () => ActionExecutor.addGrocery(i.name, i.name.match(/tomato/i) ? '4' : '1'))
+              });
+            }
+
+            // Sukoon
+            if (!silState.wellbeing.sukoonTaken && new Date().getHours() >= 16) {
+              insights.push({
+                id: 'sukoon-evening',
+                priority: 4,
+                icon: '🧘',
+                text: 'Thak gayi lagti ho. 5 minute Sukoon lein? Main timer laga deti hoon 🌸',
+                short: 'Sukoon break',
+                actions: [() => { if (typeof goTo === 'function') goTo('sukoon'); }]
+              });
+            }
+
+            insights.sort((a, b) => b.priority - a.priority);
+            return insights;
+          },
+
+          runProactive(force) {
+            const insights = this.analyze();
+            if (!insights.length) return null;
+            const top = insights[0];
+            // avoid spam
+            if (!force && Date.now() - (silState.meta.lastProactiveAt || 0) < 5 * 60 * 1000) {
+              // still allow acceptance scenario if high priority
+              if (top.priority < 9) return null;
+            }
+            silState.meta.lastProactiveAt = Date.now();
+            saveSILState(silState);
+
+            const floatEl = document.getElementById('proactive-float');
+            if (floatEl) {
+              const icon = document.getElementById('proactive-float-icon');
+              const txt = document.getElementById('proactive-float-text');
+              if (icon) icon.textContent = top.icon;
+              if (txt) txt.textContent = top.short || top.text.slice(0, 90) + '…';
+              floatEl.classList.remove('hidden');
+              floatEl._silInsight = top;
+            }
+            // Also toast full message for acceptance visibility
+            showToast(top.text.slice(0, 120) + (top.text.length > 120 ? '…' : ''));
+            if (typeof speakSaheli === 'function' || window.SaheliVoice) {
+              (window.SaheliVoice || { speak: speakSaheli }).speak(top.text);
+            }
+            return top;
+          },
+
+          executeInsight(insight) {
+            if (!insight || !insight.actions) return;
+            insight.actions.forEach(fn => { try { fn(); } catch (e) { console.warn(e); } });
+            showToast('✅ Saheli ne sab set kar diya ❤️');
+          }
+        };
+        window.SaheliIntelligence = SaheliIntelligence;
+
+        // Hook proactive float yes to SIL
+        document.getElementById('proactive-float-yes')?.addEventListener('click', () => {
+          const floatEl = document.getElementById('proactive-float');
+          const insight = floatEl && floatEl._silInsight;
+          if (insight) {
+            SaheliIntelligence.executeInsight(insight);
+            floatEl._silInsight = null;
+          }
+        }, true);
+
+        // Run proactive after short delay (acceptance scenario)
+        setTimeout(() => {
+          try { SaheliIntelligence.runProactive(true); } catch (e) { console.warn('SIL proactive', e); }
+        }, 2500);
+
+        // ─── Conversation Manager ───
+        const Conversation = {
+          history: [],
+          pending: null, // { intent, entities, step }
+          load() {
+            try {
+              const h = JSON.parse(localStorage.getItem(CONV_KEY) || '[]');
+              this.history = Array.isArray(h) ? h.slice(-20) : [];
+            } catch (e) { this.history = []; }
+          },
+          save() {
+            try { localStorage.setItem(CONV_KEY, JSON.stringify(this.history.slice(-20))); } catch (e) {}
+          },
+          push(role, text) {
+            this.history.push({ role, text, at: Date.now() });
+            this.save();
+          },
+          clearPending() { this.pending = null; }
+        };
+        Conversation.load();
+
+        // ─── Intent + Entity Parser (Hinglish) ───
+        function normalizeHinglish(t) {
+          return (t || '')
+            .toLowerCase()
+            .replace(/[.,!?]/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+        }
+
+        function parseIntent(utterance) {
+          const t = normalizeHinglish(utterance);
+          const entities = {
+            person: null,
+            date: null,
+            items: [],
+            meal: null,
+            action: null,
+            message: null
+          };
+
+          // Person detection
+          const kids = silState.family.children || [];
+          for (const c of kids) {
+            if (t.includes(c.name.toLowerCase())) entities.person = c;
+          }
+          if (!entities.person) {
+            if (/beti|daughter|girl/.test(t)) {
+              entities.person = kids.find(c => c.gender === 'girl') || kids[1] || { name: 'Aarohee', id: 'aarohee', gender: 'girl' };
+            } else if (/beta|son|ladka/.test(t)) {
+              entities.person = kids.find(c => c.gender === 'boy') || kids[0] || { name: 'Rohan', id: 'rohan', gender: 'boy' };
+            }
+          }
+
+          // Date
+          if (/kal|tomorrow/.test(t)) entities.date = 'tomorrow';
+          else if (/aaj|today/.test(t)) entities.date = 'today';
+          else if (/parso|day after/.test(t)) entities.date = 'day_after';
+
+          // Birthday
+          if (/birthday|janamdin|happy birthday|bday/.test(t)) {
+            return { intent: 'birthday', entities, confidence: 0.95 };
+          }
+
+          // Meal plan
+          if (/lunch|dopahar|khana|dinner|raat ka|nashta|breakfast|paneer|bhurji|banaiye|plan/.test(t) &&
+              /ban|plan|set|kar|suggest|kya/.test(t)) {
+            if (/lunch|dopahar/.test(t)) entities.meal = 'lunch';
+            if (/dinner|raat/.test(t)) entities.meal = 'dinner';
+            if (/paneer/.test(t)) entities.items.push('paneer');
+            return { intent: 'meal_plan', entities, confidence: 0.85 };
+          }
+
+          // Grocery
+          if (/grocery|list|add|kharid|tomatoes|tamatar|doodh|sabzi/.test(t) &&
+              /add|daal|list|kharid|chahiye/.test(t)) {
+            if (/tomato|tamatar/.test(t)) entities.items.push({ name: 'Tomatoes', qty: '4' });
+            if (/doodh|milk/.test(t)) entities.items.push({ name: 'Doodh', qty: '2L' });
+            return { intent: 'grocery_add', entities, confidence: 0.85 };
+          }
+
+          // Reminder / PTM
+          if (/reminder|yaad|ptm|parent.?teacher|uniform/.test(t)) {
+            return { intent: 'reminder', entities, confidence: 0.8 };
+          }
+
+          // Affirmation
+          if (/^(haan|han|ha|yes|ok|okay|theek|sahi|kar do|kar doon|please|bilkul)$/.test(t) ||
+              /^(haan|yes|ok)\b/.test(t)) {
+            return { intent: 'affirm', entities, confidence: 0.9 };
+          }
+
+          // Negation
+          if (/^(nahi|na|no|mat|baad mein)$/.test(t)) {
+            return { intent: 'deny', entities, confidence: 0.9 };
+          }
+
+          // Message / wish
+          if (/message|wish|whatsapp|likh|cute|text/.test(t)) {
+            return { intent: 'write_message', entities, confidence: 0.85 };
+          }
+
+          // Greeting
+          if (/namaste|hello|hi|saheli|kaise ho|sun/.test(t)) {
+            return { intent: 'greeting', entities, confidence: 0.7 };
+          }
+
+          // Proactive / help
+          if (/kya karna|suggest|plan|bata|help|madad|proactive/.test(t)) {
+            return { intent: 'ask_proactive', entities, confidence: 0.75 };
+          }
+
+          return { intent: 'unknown', entities, confidence: 0.3 };
+        }
+
+        function tomorrowISO() {
+          const d = new Date();
+          d.setDate(d.getDate() + 1);
+          return d.toISOString().slice(0, 10);
+        }
+
+        function generateBirthdayMessage(name) {
+          const msgs = [
+            '🎂 Happy Birthday meri pyaari ' + name + '! Tumhari muskaan se ghar roshan rehta hai. Bhagwan tumhe khushiyaan de ❤️🌸',
+            '🌸 Janamdin mubarak, ' + name + '! Tumhari hasi humari sabse badi khushi hai. Hamesha muskurati raho ❤️🎂',
+            '💖 Happy Birthday ' + name + '! Aaj ka din sirf tumhara hai — cake, hugs aur bahut saara pyaar 🎈❤️'
+          ];
+          return msgs[new Date().getDate() % msgs.length];
+        }
+
+        // ─── Response + Action pipeline ───
+        function handleUtterance(text) {
+          Conversation.push('user', text);
+          const parsed = parseIntent(text);
+          let reply = '';
+          let speakText = '';
+
+          // Multi-turn: pending confirmation
+          if (Conversation.pending) {
+            const pend = Conversation.pending;
+            if (parsed.intent === 'affirm' || parsed.intent === 'write_message') {
+              if (pend.intent === 'birthday') {
+                const name = (pend.entities.person && pend.entities.person.name) || 'Aarohee';
+                ActionExecutor.addEvent(name + ' Birthday', tomorrowISO(), '', 'birthday');
+                ActionExecutor.addGrocery('Cake', '1');
+                ActionExecutor.addGrocery('Balloons', '1 pack');
+                ActionExecutor.addGrocery('Return gifts', '10 pcs');
+                ActionExecutor.addReminder('School sweets pack karna', 'tonight', '20:00');
+                reply = 'Ho gaya ❤️ Cake, balloons, return gifts list mein add, aur aaj raat school sweets ka reminder set. Birthday wish ka message bhi likh doon WhatsApp ke liye?';
+                Conversation.pending = { intent: 'birthday_message', entities: pend.entities, step: 'ask_message' };
+              } else if (pend.intent === 'birthday_message') {
+                const name = (pend.entities.person && pend.entities.person.name) || 'Aarohee';
+                const msg = generateBirthdayMessage(name);
+                reply = 'Yeh lo cute message 🌸\n\n"' + msg + '"\n\nWhatsApp pe share karoon?';
+                Conversation.pending = { intent: 'share_wa', entities: { ...pend.entities, message: msg }, step: 'share' };
+              } else if (pend.intent === 'share_wa') {
+                const msg = pend.entities.message || generateBirthdayMessage('Aarohee');
+                try {
+                  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+                } catch (e) {}
+                reply = 'WhatsApp open kar diya ❤️ Share kar lena. Aur kuch chahiye toh boliye!';
+                Conversation.clearPending();
+              } else if (pend.intent === 'proactive_confirm') {
+                if (pend.insight) SaheliIntelligence.executeInsight(pend.insight);
+                reply = 'Sab set kar diya ❤️ Aap tension mat lo.';
+                Conversation.clearPending();
+              } else {
+                reply = 'Theek hai ❤️ Aur batao, main sun rahi hoon.';
+                Conversation.clearPending();
+              }
+            } else if (parsed.intent === 'deny') {
+              reply = 'Koi baat nahi 🌸 Jab mann kare, bol dena. Main yahin hoon.';
+              Conversation.clearPending();
+            } else if (parsed.intent === 'write_message' && pend.intent === 'birthday_message') {
+              const name = (pend.entities.person && pend.entities.person.name) || 'Aarohee';
+              const msg = generateBirthdayMessage(name);
+              reply = 'Cute message ready 💕\n\n"' + msg + '"\n\nShare on WhatsApp?';
+              Conversation.pending = { intent: 'share_wa', entities: { ...pend.entities, message: msg }, step: 'share' };
+            } else {
+              // fall through to new intent
+              Conversation.clearPending();
+              return handleUtterance(text);
+            }
+            speakText = reply.replace(/\n/g, '. ');
+            Conversation.push('saheli', reply);
+            return { reply, speakText, parsed };
+          }
+
+          // Fresh intents
+          switch (parsed.intent) {
+            case 'birthday': {
+              const name = (parsed.entities.person && parsed.entities.person.name) || 'Aarohee';
+              reply = 'Haan ❤️ Kal ' + name + ' ka birthday hai. Cake, balloons aur return gifts list mein add kar doon? Aur school mein sweets bhejne hain?';
+              Conversation.pending = { intent: 'birthday', entities: parsed.entities, step: 'confirm' };
+              break;
+            }
+            case 'meal_plan': {
+              const meal = parsed.entities.meal || 'lunch';
+              const dish = parsed.entities.items.includes('paneer') || silState.fridge.items.some(i => /paneer/i.test(i.name))
+                ? 'Paneer Bhurji + Roti' : 'Dal + Roti + Salad';
+              ActionExecutor.setMeal(meal, dish);
+              reply = 'Theek hai ❤️ ' + meal + ' ke liye "' + dish + '" set kar diya. Aur kuch chahiye?';
+              break;
+            }
+            case 'grocery_add': {
+              if (parsed.entities.items.length) {
+                parsed.entities.items.forEach(it => {
+                  if (typeof it === 'string') ActionExecutor.addGrocery(it);
+                  else ActionExecutor.addGrocery(it.name, it.qty);
+                });
+                reply = 'List update 🛒 ' + parsed.entities.items.map(i => typeof i === 'string' ? i : i.name).join(', ') + ' add ho gaya.';
+              } else {
+                reply = 'Kya add karoon list mein? Jaise tomatoes, doodh…';
+                Conversation.pending = { intent: 'grocery_wait', entities: {}, step: 'ask_item' };
+              }
+              break;
+            }
+            case 'reminder': {
+              const who = (parsed.entities.person && parsed.entities.person.name) || 'Rohan';
+              ActionExecutor.addReminder(who + ' PTM — uniform ready', 'tomorrow', '15:30');
+              reply = 'Reminder set 🔔 ' + who + ' PTM ke liye 3:30 PM — uniform ready. Baarish ho toh umbrella bhi ☔';
+              ActionExecutor.noteWeatherOutfit();
+              break;
+            }
+            case 'greeting': {
+              const n = silState.profile.name || 'Priya';
+              reply = 'Namaste ' + n + ' Ji 🙏 Main aapki Saheli. Boliye, aaj kya sambhalna hai?';
+              break;
+            }
+            case 'ask_proactive': {
+              const top = SaheliIntelligence.analyze()[0];
+              if (top) {
+                reply = top.text + '\n\nKar doon?';
+                Conversation.pending = { intent: 'proactive_confirm', insight: top, entities: {}, step: 'confirm' };
+              } else {
+                reply = 'Abhi sab theek lag raha hai 🌸 Meals, list ya reminder mein help chahiye?';
+              }
+              break;
+            }
+            case 'write_message': {
+              const name = (parsed.entities.person && parsed.entities.person.name) ||
+                (silState.family.children.find(c => c.gender === 'girl') || {}).name || 'Aarohee';
+              const msg = generateBirthdayMessage(name);
+              reply = 'Yeh lo 💕\n\n"' + msg + '"\n\nWhatsApp share karoon?';
+              Conversation.pending = { intent: 'share_wa', entities: { person: { name }, message: msg }, step: 'share' };
+              break;
+            }
+            case 'affirm': {
+              reply = 'Haan boliye ❤️ Main sun rahi hoon.';
+              break;
+            }
+            default: {
+              // Fuzzy: birthday-like without exact keyword after context
+              if (/kal/.test(normalizeHinglish(text)) && /beti|aarohee|birthday|party/.test(normalizeHinglish(text))) {
+                return handleUtterance('kal meri beti ka birthday hai');
+              }
+              reply = 'Samajh gayi… thoda aur detail batao? Jaise "kal beti ka birthday" ya "lunch plan karo" 🌸';
+            }
+          }
+
+          speakText = reply.replace(/\n/g, '. ');
+          Conversation.push('saheli', reply);
+          return { reply, speakText, parsed };
+        }
+
+        // ─── Voice Engine ───
+        const SaheliVoice = {
+          recognizing: false,
+          recognition: null,
+          preferredVoice: null,
+
+          pickVoice() {
+            if (!window.speechSynthesis) return null;
+            const voices = window.speechSynthesis.getVoices() || [];
+            const prefer = voices.find(v => /hi-IN|Hindi/i.test(v.lang) && /female|woman|Google/i.test(v.name)) ||
+              voices.find(v => /hi-IN|Hindi/i.test(v.lang)) ||
+              voices.find(v => /en-IN/i.test(v.lang)) ||
+              voices.find(v => /en-GB|en-US/i.test(v.lang) && /female|Samantha|Google/i.test(v.name)) ||
+              voices[0];
+            this.preferredVoice = prefer || null;
+            return this.preferredVoice;
+          },
+
+          speak(text, opts) {
+            if (!window.speechSynthesis || !text) return;
+            try {
+              window.speechSynthesis.cancel();
+              const u = new SpeechSynthesisUtterance(String(text).slice(0, 500));
+              u.lang = 'hi-IN';
+              u.rate = 0.95;
+              u.pitch = 1.05;
+              const v = this.preferredVoice || this.pickVoice();
+              if (v) u.voice = v;
+              if (opts && opts.onend) u.onend = opts.onend;
+              window.speechSynthesis.speak(u);
+            } catch (e) { console.warn('TTS', e); }
+          },
+
+          stopSpeak() {
+            try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+          },
+
+          startListen(onResult, onError) {
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SR) {
+              showToast('Voice is browser mein support nahi — Chrome try karein');
+              if (onError) onError('no_sr');
+              return null;
+            }
+            try {
+              if (this.recognition) {
+                try { this.recognition.stop(); } catch (e) {}
+              }
+              const rec = new SR();
+              this.recognition = rec;
+              rec.lang = 'hi-IN';
+              rec.interimResults = true;
+              rec.continuous = false;
+              rec.maxAlternatives = 3;
+              this.recognizing = true;
+              let finalText = '';
+              rec.onresult = (ev) => {
+                let interim = '';
+                for (let i = ev.resultIndex; i < ev.results.length; i++) {
+                  const r = ev.results[i];
+                  if (r.isFinal) finalText += r[0].transcript;
+                  else interim += r[0].transcript;
+                }
+                const live = (finalText || interim).trim();
+                const tr = document.getElementById('sm-transcript') || document.getElementById('mic-transcript');
+                if (tr) tr.textContent = live ? '“' + live + '”' : 'Sun rahi hoon…';
+                if (finalText && onResult) {
+                  onResult(finalText.trim());
+                }
+              };
+              rec.onerror = (e) => {
+                this.recognizing = false;
+                if (onError) onError(e.error || 'error');
+              };
+              rec.onend = () => {
+                this.recognizing = false;
+                if (finalText && onResult) {
+                  // already handled in onresult for finals often
+                }
+              };
+              rec.start();
+              return rec;
+            } catch (e) {
+              this.recognizing = false;
+              if (onError) onError(String(e));
+              return null;
+            }
+          },
+
+          stopListen() {
+            this.recognizing = false;
+            try { if (this.recognition) this.recognition.stop(); } catch (e) {}
+          }
+        };
+
+        // Warm up voices
+        if (window.speechSynthesis) {
+          window.speechSynthesis.onvoiceschanged = () => SaheliVoice.pickVoice();
+          SaheliVoice.pickVoice();
+        }
+
+        // Override / enhance speakSaheli if exists
+        window.SaheliVoice = SaheliVoice;
+        const _origSpeak = typeof speakSaheli === 'function' ? speakSaheli : null;
+        window.speakSaheli = function(text) {
+          SaheliVoice.speak(text);
+          if (_origSpeak) try { /* skip double */ } catch (e) {}
+        };
+
+        function showVoiceReply(reply) {
+          const tr = document.getElementById('sm-transcript') || document.getElementById('mic-transcript');
+          if (tr) tr.textContent = 'Saheli: ' + reply.slice(0, 200);
+          // voice sheet body
+          const sheetBody = document.querySelector('#sm-voice-sheet .sm-transcript, #sm-voice-sheet [data-reply]');
+          if (sheetBody) sheetBody.textContent = reply;
+          showToast('🎙️ ' + reply.slice(0, 100) + (reply.length > 100 ? '…' : ''));
+        }
+
+        function processVoiceText(text) {
+          if (!text || text.length < 1) return;
+          const result = handleUtterance(text);
+          showVoiceReply(result.reply);
+          SaheliVoice.speak(result.speakText || result.reply);
+          return result;
+        }
+        window.SaheliProcessVoice = processVoiceText;
+        window.SaheliHandleText = handleUtterance;
+
+        // Wire floating mic + main mic + sm listen
+        function setListeningUI(on) {
+          document.querySelectorAll('#mic-btn, #sm-mic-btn, #rasoi-mic-btn').forEach(btn => {
+            if (!btn) return;
+            btn.classList.toggle('mic-listening', on);
+            btn.classList.toggle('listening', on);
+            btn.classList.toggle('mic-idle', !on);
+          });
+          const bubble = document.querySelector('#saheli-mic-float .sm-bubble');
+          if (bubble) {
+            bubble.textContent = on ? 'Sun rahi hoon…' : 'Boliye Saheli';
+            bubble.classList.toggle('show', on);
+          }
+        }
+
+        function startConversationListen() {
+          SaheliVoice.stopSpeak();
+          setListeningUI(true);
+          const overlay = document.getElementById('sm-voice-overlay');
+          if (overlay) {
+            overlay.classList.add('open');
+            overlay.setAttribute('aria-hidden', 'false');
+          }
+          const tr = document.getElementById('sm-transcript');
+          if (tr) tr.textContent = 'Boliye… Hindi / Hinglish';
+
+          SaheliVoice.startListen(
+            (text) => {
+              setListeningUI(false);
+              processVoiceText(text);
+            },
+            (err) => {
+              setListeningUI(false);
+              if (err === 'no_sr') return;
+              showToast('Dobara try karein 🎙️ (' + err + ')');
+            }
+          );
+          // safety timeout
+          setTimeout(() => {
+            if (SaheliVoice.recognizing) {
+              SaheliVoice.stopListen();
+              setListeningUI(false);
+            }
+          }, 12000);
+        }
+
+        // Bind buttons (capture to override older simple handlers where possible)
+        ['sm-mic-btn', 'mic-btn'].forEach(id => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (SaheliVoice.recognizing) {
+              SaheliVoice.stopListen();
+              setListeningUI(false);
+              return;
+            }
+            startConversationListen();
+          }, true);
+        });
+
+        document.getElementById('sm-voice-close')?.addEventListener('click', () => {
+          SaheliVoice.stopListen();
+          setListeningUI(false);
+          const overlay = document.getElementById('sm-voice-overlay');
+          if (overlay) {
+            overlay.classList.remove('open');
+            overlay.setAttribute('aria-hidden', 'true');
+          }
+        });
+
+        document.getElementById('sm-listen-btn')?.addEventListener('click', () => {
+          startConversationListen();
+        });
+
+        // Chip shortcuts in voice sheet
+        document.querySelectorAll('.sm-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const cmd = chip.getAttribute('data-sm-cmd') || '';
+            let t = chip.textContent.trim();
+            if (cmd === 'birthday') t = 'Saheli, kal meri beti ka birthday hai.';
+            else if (cmd === 'ptm') {
+              const insight = SaheliIntelligence.runProactive(true);
+              if (insight) {
+                Conversation.pending = { intent: 'proactive_confirm', insight, entities: {}, step: 'confirm' };
+                showVoiceReply(insight.text + ' Kar doon?');
+                SaheliVoice.speak(insight.text);
+              }
+              return;
+            } else if (cmd === 'haan') t = 'Haan.';
+            else if (cmd === 'recipe') t = 'Aaj lunch kya banaye paneer se';
+            else if (cmd === 'ration') t = 'Tomatoes grocery list mein add karo';
+            else if (cmd === 'reminder') t = 'Rohan PTM ka reminder set karo';
+            else if (cmd === 'sukoon') t = 'Sukoon time chahiye';
+            processVoiceText(t);
+          });
+        });
+
+        // Expose demo helpers for acceptance tests
+        window.SaheliDemo = {
+          runPTMScenario() {
+            // ensure state matches acceptance
+            const tomorrow = tomorrowISO();
+            silState.calendar.events = silState.calendar.events.filter(e => !/ptm/i.test(e.title));
+            silState.calendar.events.push({ id: 'ptm-rohan', title: 'Rohan PTM', date: tomorrow, time: '16:00', person: 'Rohan', type: 'school' });
+            silState.meals.lunch = null;
+            silState.meals.planned.lunch = false;
+            silState.fridge.items = [
+              { name: 'Paneer', qty: '200g', expiresInDays: 1 },
+              { name: 'Tomatoes', qty: 1, low: true },
+              { name: 'Doodh', qty: '500ml', urgent: true }
+            ];
+            silState.weather.tomorrow = 'rain';
+            saveSILState(silState);
+            const insight = SaheliIntelligence.runProactive(true);
+            return insight;
+          },
+          runBirthdayVoice(text) {
+            return processVoiceText(text || 'Saheli, kal meri beti ka birthday hai.');
+          },
+          affirm() { return processVoiceText('Haan.'); },
+          askMessage() { return processVoiceText('Haan, aur ek cute sa message likho.'); }
+        };
+
+        console.info('[GharSaheli SIL] v' + SIL_VERSION + ' ready — SaheliDemo.runPTMScenario() / SaheliDemo.runBirthdayVoice()');
+      })();
+
+
+
+      // ========== CALM UX: More menu + collapsible subsections + editable overview ==========
+      (function initCalmUX() {
+        function openMore() {
+          const ov = document.getElementById('gs-more-overlay');
+          if (!ov) return;
+          ov.classList.add('open');
+          ov.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+        function closeMore() {
+          const ov = document.getElementById('gs-more-overlay');
+          if (!ov) return;
+          ov.classList.remove('open');
+          ov.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+        document.getElementById('gs-open-more')?.addEventListener('click', openMore);
+        document.getElementById('gs-more-close')?.addEventListener('click', closeMore);
+        document.getElementById('gs-more-overlay')?.addEventListener('click', e => {
+          if (e.target.id === 'gs-more-overlay') closeMore();
+        });
+
+        function handleGsAction(act) {
+          closeMore();
+          if (act === 'settings') {
+            document.querySelector('.settings-gear-btn')?.click();
+          } else if (act === 'sos') {
+            document.getElementById('sos-fab')?.click();
+          } else if (act === 'awaaz') {
+            const btn = document.getElementById('awaaz-open') || document.querySelector('[data-open-awaaz], #meri-awaaz-btn, button[aria-label*="Awaaz"]');
+            if (btn) btn.click();
+            else {
+              // try open overlay directly
+              const ov = document.getElementById('awaaz-overlay');
+              if (ov) { ov.classList.add('open'); ov.setAttribute('aria-hidden', 'false'); }
+              else showToast('📢 Meri Awaaz — Settings / Safety se open karein');
+            }
+          } else if (act === 'prayer') {
+            goTo('sukoon');
+            setTimeout(() => {
+              document.querySelector('.prayer-hero, #prayer-section, [aria-label*="Prarthana"], [aria-label*="Puja"]')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 350);
+          }
+        }
+
+        document.querySelectorAll('[data-gs-action]').forEach(btn => {
+          btn.addEventListener('click', () => handleGsAction(btn.getAttribute('data-gs-action')));
+        });
+        // hub cards with data-nav inside more menu also close
+        document.querySelectorAll('#gs-more-sheet [data-nav], .gs-hub-grid [data-nav]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            closeMore();
+            const n = btn.getAttribute('data-nav');
+            if (n && typeof goTo === 'function') goTo(n);
+          });
+        });
+
+        // Collapsible: wrap heavy home widgets (keep voice + overview + hub always open)
+        const collapsibleIds = [
+          ['mental-load-widget', '🧠 Mental Load', 'Aaj ka load'],
+          ['invisible-salary-calculator', '👑 Invisible Salary', 'Ghar ki true value'],
+          ['mandi-bhav-widget', '🛒 Mandi Bhav', 'Aaj ke rates'],
+          ['guilt-free-earning-card', '💚 Guilt-free Earning', 'Apna time'],
+          ['mera-adhoora-sapna-card', '✨ Mera Sapna', 'Goals'],
+          ['meri-asli-pehchaan-card', '🪞 Meri Pehchaan', 'Identity'],
+          ['kya-main-galat-hoon-card', '💙 Kya Main Galat?', 'Guilt support'],
+          ['future-self-visualization', '🔮 Future Self', 'Vision'],
+          ['communication-scripts', '💬 Scripts', 'Bolne ke tarike'],
+          ['sasural-vs-mayka-tracker', '🏠 First Festivals', 'Sasural · Mayka'],
+          ['saheli-forever-card', '👭 Saheli Forever', 'Friends'],
+          ['mera-mayka-care-card', '🧡 Mayka Care', 'Parents'],
+          ['mera-body-meri-kahani-card', '🌸 Body Story', 'Health cycle']
+        ];
+
+        function wrapCollapsible(id, title, meta) {
+          const el = document.getElementById(id);
+          if (!el || el.closest('.gs-sub')) return;
+          const parent = el.parentNode;
+          const wrap = document.createElement('div');
+          wrap.className = 'gs-sub';
+          wrap.dataset.gsSubId = id;
+          const head = document.createElement('button');
+          head.type = 'button';
+          head.className = 'gs-sub-head';
+          head.setAttribute('aria-expanded', 'false');
+          head.innerHTML = '<span class="gs-sub-title">' + title + '</span><span class="gs-sub-meta">' + meta + '</span><span class="gs-sub-chevron" aria-hidden="true">▼</span>';
+          const body = document.createElement('div');
+          body.className = 'gs-sub-body';
+          parent.insertBefore(wrap, el);
+          wrap.appendChild(head);
+          wrap.appendChild(body);
+          body.appendChild(el);
+          // remove outer margin clash
+          el.style.marginTop = '0';
+          head.addEventListener('click', () => {
+            const open = wrap.classList.toggle('open');
+            head.setAttribute('aria-expanded', open ? 'true' : 'false');
+            try { localStorage.setItem('gs_sub_' + id, open ? '1' : '0'); } catch (e) {}
+          });
+          try {
+            if (localStorage.getItem('gs_sub_' + id) === '1') {
+              wrap.classList.add('open');
+              head.setAttribute('aria-expanded', 'true');
+            }
+          } catch (e) {}
+        }
+        // Delay until DOM widgets exist
+        setTimeout(() => {
+          collapsibleIds.forEach(([id, title, meta]) => wrapCollapsible(id, title, meta));
+        }, 400);
+
+        // Editable overview metrics — long-press / click to edit
+        function makeEditable(statusId, labelId, key, placeholder) {
+          const st = document.getElementById(statusId);
+          const lb = document.getElementById(labelId);
+          if (!st) return;
+          const card = st.closest('.metric-card');
+          if (!card) return;
+          card.style.cursor = 'pointer';
+          card.title = 'Tap to edit';
+          card.addEventListener('click', () => {
+            const curStatus = st.textContent;
+            const curLabel = lb ? lb.textContent : '';
+            const ns = prompt('Status (short):', curStatus);
+            if (ns === null) return;
+            const nl = prompt('Detail label:', curLabel);
+            if (nl === null) return;
+            st.textContent = ns.trim() || curStatus;
+            if (lb) lb.textContent = (nl.trim() || curLabel);
+            try {
+              localStorage.setItem('gs_metric_' + key, JSON.stringify({ s: st.textContent, l: lb ? lb.textContent : '' }));
+            } catch (e) {}
+            showToast('✅ Overview update — aap control mein ho');
+          });
+          try {
+            const saved = JSON.parse(localStorage.getItem('gs_metric_' + key) || 'null');
+            if (saved) {
+              st.textContent = saved.s;
+              if (lb && saved.l) lb.textContent = saved.l;
+            }
+          } catch (e) {}
+        }
+        makeEditable('metric-meals-status', 'metric-meals-label', 'meals');
+        makeEditable('metric-family-status', 'metric-family-label', 'family');
+        makeEditable('metric-grocery-status', 'metric-grocery-label', 'grocery');
+        makeEditable('metric-sukoon-status', 'metric-sukoon-label', 'sukoon');
+
+        // Header: simplify rashi chip crowding if present - keep as is
+
+        // Single voice primary: hide floating mic on home (CSS body.gs-on-home)
+        // Soften rasoi mic label so it's secondary
+        const rasoiMic = document.getElementById('rasoi-mic-btn');
+        if (rasoiMic) {
+          rasoiMic.style.transform = 'scale(0.85)';
+        }
+
+        console.info('[GharSaheli Calm UX] 5-tab nav · collapsible home · editable overview');
+      })();
+
+
+
+      // Header avatar initial from profile name
+      (function syncHeaderAvatar() {
+        function apply() {
+          try {
+            const p = JSON.parse(localStorage.getItem('gharSaheliProfile') || '{}');
+            const name = (p.name || '').trim() || 'Ajita';
+            const letter = name.charAt(0).toUpperCase();
+            const el = document.getElementById('header-avatar-letter');
+            if (el) el.textContent = letter;
+          } catch (e) {}
+        }
+        apply();
+        setTimeout(apply, 800);
+      })();
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
