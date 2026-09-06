@@ -3259,6 +3259,19 @@
 
         <!-- ═══ AAJ — the daily brief (calm, personal, one glance) ═══ -->
         <section class="animate-in" id="aaj-brief">
+          <!-- Saheli speaks first — proactive, anticipatory card -->
+          <div id="saheli-proactive" class="hidden mb-3 rounded-2xl p-3.5 shadow-card border border-terracotta/25" style="background: linear-gradient(135deg, rgba(198,93,58,0.10), rgba(232,163,61,0.10));">
+            <div class="flex items-start gap-2.5">
+              <span class="text-xl shrink-0" style="line-height:1.4">💬</span>
+              <div class="flex-1 min-w-0">
+                <p class="text-[9px] font-bold uppercase tracking-widest text-terracotta mb-0.5">Saheli keh rahi hai</p>
+                <p class="text-[13px] font-semibold text-charcoal leading-snug" id="proactive-text">…</p>
+                <div class="flex gap-2 mt-2" id="proactive-actions"></div>
+              </div>
+              <button type="button" id="proactive-dismiss" class="shrink-0 text-warm-muted/60 text-sm px-1" aria-label="Abhi nahi">✕</button>
+            </div>
+          </div>
+
           <div class="rounded-2xl p-4 shadow-card border border-marigold/25 overflow-hidden" style="background: linear-gradient(150deg, #FDF2E0 0%, #FBF7F0 60%, rgba(122,155,118,0.10) 100%);">
             <p class="text-[10px] font-bold uppercase tracking-widest text-terracotta mb-0.5" id="aaj-kicker">Aaj</p>
             <h2 class="text-lg font-extrabold text-charcoal leading-tight" id="aaj-greeting">Namaste 🌸</h2>
@@ -3274,6 +3287,16 @@
               </button>
             </div>
             <div id="aaj-ask-answer" class="hidden mt-2 rounded-xl px-3 py-2.5 bg-white/80 border border-mehendi/20 text-[12px] text-charcoal leading-snug"></div>
+
+            <!-- Aaj ka Hisaab — nightly reflection loop -->
+            <div id="aaj-hisaab" class="mt-3 pt-3 border-t border-marigold/20">
+              <p class="text-[11px] font-bold text-charcoal mb-1.5" id="hisaab-q">Aaj ka din kaisa raha? 🌙</p>
+              <div class="flex gap-2 justify-between" id="hisaab-moods"></div>
+              <p id="hisaab-done" class="hidden text-[11px] text-mehendi font-semibold mt-2 leading-snug"></p>
+            </div>
+
+            <!-- You're not alone — ambient collective -->
+            <p class="text-[10px] text-center text-warm-muted mt-3 leading-snug" id="aaj-collective"></p>
           </div>
         </section>
 
@@ -8095,6 +8118,43 @@
       };
       const navItems = document.querySelectorAll('.nav-item');
 
+      // ══════════════════════════════════════════════════════════
+      //  REAL-TIME DATA BUS  — single source of truth for updates.
+      //  Any data write calls gsPublish('<kind>'); every dependent
+      //  view subscribes via gsSubscribe(). This guarantees the whole
+      //  UI reflects a change instantly, wherever it happens, without
+      //  each feature having to remember which refreshers to call.
+      // ══════════════════════════════════════════════════════════
+      (function () {
+        const subs = [];            // { kinds:Set|null, fn }
+        let queued = false;
+        const pending = new Set();
+        function flush() {
+          queued = false;
+          const kinds = new Set(pending); pending.clear();
+          subs.forEach(s => {
+            if (!s.kinds || [...kinds].some(k => s.kinds.has(k))) {
+              try { s.fn(kinds); } catch (e) {}
+            }
+          });
+        }
+        // Publish a change. `kind` e.g. 'grocery','priority','expense',
+        // 'meal','reminder','sukoon','mood','kamai','community','any'.
+        window.gsPublish = function (kind) {
+          pending.add(kind || 'any');
+          if (!queued) { queued = true; (window.requestAnimationFrame || setTimeout)(flush, 0); }
+        };
+        // Subscribe a view. kinds = array of kinds it cares about, or
+        // null/omitted for "all". Returns an unsubscribe fn.
+        window.gsSubscribe = function (kinds, fn) {
+          if (typeof kinds === 'function') { fn = kinds; kinds = null; }
+          const entry = { kinds: kinds ? new Set(kinds) : null, fn };
+          subs.push(entry);
+          return () => { const i = subs.indexOf(entry); if (i >= 0) subs.splice(i, 1); };
+        };
+      })();
+
+
       // Calm IA: map secondary routes → primary screens + subtabs
       const NAV_ALIASES = {
         'seekho-kamai': 'kamai',
@@ -8184,6 +8244,7 @@
           try { window.refreshGharOverview(); } catch (e) {}
           try { if (window.gsRenderReminders) window.gsRenderReminders(); } catch (e) {}
           try { if (window.gsRenderAaj) window.gsRenderAaj(); } catch (e) {}
+          try { if (window.gsRenderAajExtras) window.gsRenderAajExtras(); } catch (e) {}
         }
         const rasoiFab = document.getElementById('rasoi-fab');
         if (rasoiFab) rasoiFab.style.display = resolved === 'rasoi' ? 'flex' : 'none';
@@ -8835,6 +8896,7 @@
       }
       function saveSukoonState(s) {
         localStorage.setItem('gharSaheliSukoon', JSON.stringify(s));
+        try { if (window.gsPublish) window.gsPublish('sukoon'); } catch (e) {}
       }
       let sukoonState = loadSukoonState();
 
@@ -10511,6 +10573,7 @@
 
       function saveDailyAchievements(a) {
         localStorage.setItem(DAILY_ACHIEVE_KEY, JSON.stringify(a));
+        try { if (window.gsPublish) window.gsPublish('sukoon'); } catch (e) {}
       }
 
       let dailyAch = loadDailyAchievements();
@@ -10600,7 +10663,7 @@
         } catch (e) {}
         return defaultPriorities();
       }
-      function savePriorities(d) { try { localStorage.setItem(PRIORITY_KEY, JSON.stringify(d)); } catch (e) {} }
+      function savePriorities(d) { try { localStorage.setItem(PRIORITY_KEY, JSON.stringify(d)); } catch (e) {} try { if (window.gsPublish) window.gsPublish('priority'); } catch (e) {} }
       let priorities = loadPriorities();
 
       function renderPriorities() {
@@ -10722,7 +10785,7 @@
         return { date: getTodayKey(), items: [], doneCustom: [] };
       }
       let customReminders = loadReminders();
-      function saveReminders() { try { localStorage.setItem(REMINDER_KEY, JSON.stringify(customReminders)); } catch (e) {} }
+      function saveReminders() { try { localStorage.setItem(REMINDER_KEY, JSON.stringify(customReminders)); } catch (e) {} try { if (window.gsPublish) window.gsPublish('reminder'); } catch (e) {} }
 
       // Build the unified pending list from real app state
       function collectReminders() {
@@ -10820,7 +10883,7 @@
           if (picks) {
             const disp = {};
             ['nashta','lunch','dinner'].forEach(k => { if (picks[k]) disp[k] = picks[k].name.replace(/[^\w\s+&]/g,'').trim(); });
-            localStorage.setItem('gharSaheliTodayPlan', JSON.stringify({ date: getTodayKey(), meals: disp }));
+            localStorage.setItem('gharSaheliTodayPlan', JSON.stringify({ date: getTodayKey(), meals: disp })); try { if (window.gsPublish) window.gsPublish('meal'); } catch (e) {}
             planned = true;
           }
         } catch (e) {}
@@ -13549,7 +13612,7 @@
           const disp = {};
           ['nashta','lunch','dinner'].forEach(k => { if (picks[k]) disp[k] = picks[k].name.replace(/[^\w\s+&]/g,'').trim(); });
           const today = new Date().toISOString().slice(0,10);
-          localStorage.setItem('gharSaheliTodayPlan', JSON.stringify({ date: today, meals: disp }));
+          localStorage.setItem('gharSaheliTodayPlan', JSON.stringify({ date: today, meals: disp })); try { if (window.gsPublish) window.gsPublish('meal'); } catch (e) {}
           if (typeof window.refreshGharOverview === 'function') window.refreshGharOverview();
         } catch (e) {}
         const slots = cards.querySelectorAll('div.glass');
@@ -13849,6 +13912,7 @@
       }
       function saveBudget(d) {
         localStorage.setItem(BUDGET_KEY, JSON.stringify(d));
+        try { if (window.gsPublish) window.gsPublish('expense'); } catch (e) {}
       }
 
       function fmtINR(n) {
@@ -14738,7 +14802,7 @@
         { name: 'Doodh 2L', done: false, urgent: true },
         { name: 'Chawal 2kg', done: false }
       ]);
-      function saveGrocery() { saveJSON(FJ_GROCERY_KEY, groceryList); }
+      function saveGrocery() { saveJSON(FJ_GROCERY_KEY, groceryList); try { if (window.gsPublish) window.gsPublish('grocery'); } catch (e) {} }
 
       // Recently-suggested recipe ids (to avoid repeats). Keep last 6.
       let fjRecent = loadJSON(FJ_RECENT_KEY, []);
@@ -19276,8 +19340,157 @@
         });
 
         window.gsRenderAaj = render;
+
+        // ══════════════════════════════════════════════════════════
+        //  SAHELI SPEAKS FIRST — proactive, anticipatory card.
+        //  Rule-based (time, day-pattern, reminders, mood streak).
+        //  Honest: no fake precision, no backend needed.
+        // ══════════════════════════════════════════════════════════
+        const SK_TOAST = (m) => { if (typeof showToast === 'function') showToast(m); };
+        function todayKeyLocal() { return (typeof getTodayKey === 'function') ? getTodayKey() : new Date().toISOString().slice(0, 10); }
+        function pName() {
+          try { const n = (JSON.parse(localStorage.getItem('gharSaheliProfile') || '{}').name || '').trim(); if (n) return n; } catch (e) {}
+          return '';
+        }
+        function moodHistory() {
+          try { return JSON.parse(localStorage.getItem('gharSaheliHisaab') || '[]'); } catch (e) { return []; }
+        }
+        function pickProactive() {
+          const h = new Date().getHours();
+          const dow = new Date().getDay();
+          const name = pName();
+          const hist = moodHistory();
+          // low-mood streak (last 3 entries) → gentle care wins priority
+          const recent = hist.slice(-3);
+          const lowStreak = recent.length >= 3 && recent.every(e => e.score <= 2);
+          if (lowStreak) {
+            return { text: 'Pichle kuch din thode heavy lag rahe hain. Aaj koi bhi kaam skip karna bilkul theek hai — main yahan hoon ❤️',
+              actions: [{ label: '🌸 Thoda Sukoon', act: () => { goTo('sukoon'); } }] };
+          }
+          // unplanned meal near a meal time
+          let planned = false;
+          try { const r = JSON.parse(localStorage.getItem('gharSaheliTodayPlan') || 'null'); planned = r && r.date === todayKeyLocal() && r.meals; } catch (e) {}
+          if (!planned && (h >= 10 && h <= 19)) {
+            return { text: 'Abhi tak khaane ka plan nahi bana? Tension mat lo — fridge dekh kar main jugaad bata deti hoon 😏',
+              actions: [{ label: '🍲 Aaj kya banau?', act: () => { if (window.gsSmartPlan) { try { window.gsSmartPlan(); } catch (e) {} } goTo('rasoi'); } }] };
+          }
+          // Tuesday/Thursday slump pattern (common heavy days)
+          if ((dow === 2 || dow === 4) && h < 12) {
+            return { text: (name ? name + ', ' : '') + 'aaj thoda bhaari din ho sakta hai. Ek-pot khichdi ya simple dinner rakh lein? Main plan kar deti hoon 🌿',
+              actions: [{ label: '🍚 Simple plan', act: () => { if (window.gsSmartPlan) { try { window.gsSmartPlan(); } catch (e) {} } goTo('rasoi'); } }] };
+          }
+          // evening wind-down
+          if (h >= 20) {
+            return { text: 'Din bhar sab sambhala aapne. Ab thodi der bas aap. Chai, ya 2 minute ki saans? ☕',
+              actions: [{ label: '🌙 Wind down', act: () => { goTo('sukoon'); } }] };
+          }
+          // urgent grocery
+          try {
+            const g = (window.gsGetGrocery ? window.gsGetGrocery() : []).filter(x => !x.done && x.urgent);
+            if (g.length) return { text: g[0].name + ' khatam hone wala hai — laana yaad rahe. Baaki list bhi ready hai 🛒',
+              actions: [{ label: '🛒 List dekho', act: () => { goTo('rasoi'); setTimeout(() => document.getElementById('grocery-list')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 350); } }] };
+          } catch (e) {}
+          // gentle default morning
+          if (h < 11) {
+            return { text: 'Suprabhat 🌸 Boring kaam main dekh leti hoon — aap bas ek cheez chuniye jo aaj sirf aapke liye ho.',
+              actions: [{ label: '💛 Mere liye', act: () => { goTo('sukoon'); } }] };
+          }
+          return null; // nothing worth interrupting for
+        }
+        function renderProactive() {
+          const card = document.getElementById('saheli-proactive');
+          if (!card) return;
+          // once dismissed this session, stay quiet
+          if (sessionStorage.getItem('gsProactiveDismissed') === todayKeyLocal()) { card.classList.add('hidden'); return; }
+          const p = pickProactive();
+          if (!p) { card.classList.add('hidden'); return; }
+          document.getElementById('proactive-text').textContent = p.text;
+          const actBox = document.getElementById('proactive-actions');
+          if (actBox) {
+            actBox.innerHTML = (p.actions || []).map((a, i) => `<button type="button" class="pa-btn text-[11px] font-bold text-white bg-terracotta px-3 py-1.5 rounded-full active:scale-95" data-i="${i}">${a.label}</button>`).join('');
+            actBox.querySelectorAll('.pa-btn').forEach((b, i) => b.addEventListener('click', () => { try { p.actions[i].act(); } catch (e) {} }));
+          }
+          card.classList.remove('hidden');
+        }
+        document.getElementById('proactive-dismiss')?.addEventListener('click', () => {
+          try { sessionStorage.setItem('gsProactiveDismissed', todayKeyLocal()); } catch (e) {}
+          document.getElementById('saheli-proactive')?.classList.add('hidden');
+        });
+
+        // ══ AAJ KA HISAAB — nightly reflection (closes the daily loop) ══
+        const HISAAB_MOODS = [
+          { e: '😊', s: 5, m: 'Aaj ka din achha tha — is feeling ko yaad rakhiye 🌸' },
+          { e: '🙂', s: 4, m: 'Theek-thaak din. Aap ne sambhal liya, bas yahi kaafi hai ❤️' },
+          { e: '😐', s: 3, m: 'Har din special nahi hota, aur ye bilkul normal hai 🌿' },
+          { e: '😔', s: 2, m: 'Mushkil din tha. Aap ne phir bhi kiya — that\'s strength. Kal naya din 🌸' },
+          { e: '😢', s: 1, m: 'Aaj bhaari raha. Aap akeli nahi hain. Thoda aaram, aur kal se phir 💛' }
+        ];
+        function renderHisaab() {
+          const box = document.getElementById('hisaab-moods');
+          const q = document.getElementById('hisaab-q');
+          const done = document.getElementById('hisaab-done');
+          if (!box) return;
+          const h = new Date().getHours();
+          // Only invite reflection in the evening; hide during the day
+          const wrap = document.getElementById('aaj-hisaab');
+          if (wrap) wrap.style.display = (h >= 18 || h < 4) ? 'block' : 'none';
+          const hist = moodHistory();
+          const already = hist.length && hist[hist.length - 1].date === todayKeyLocal();
+          if (already) {
+            box.style.display = 'none';
+            if (q) q.textContent = 'Aaj ka hisaab ho gaya 🌙';
+            const last = hist[hist.length - 1];
+            const mood = HISAAB_MOODS.find(x => x.s === last.score);
+            if (done) { done.textContent = (mood ? mood.e + ' ' + mood.m : 'Kal phir milte hain 🌸'); done.classList.remove('hidden'); }
+            return;
+          }
+          box.style.display = 'flex';
+          if (done) done.classList.add('hidden');
+          if (q) q.textContent = 'Aaj ka din kaisa raha? 🌙';
+          box.innerHTML = HISAAB_MOODS.map((mo, i) => `<button type="button" class="hisaab-btn flex-1 text-2xl py-1.5 rounded-xl active:scale-95 bg-white/60 border border-white/80" data-i="${i}" aria-label="mood">${mo.e}</button>`).join('');
+          box.querySelectorAll('.hisaab-btn').forEach((btn, i) => btn.addEventListener('click', () => {
+            const mo = HISAAB_MOODS[i];
+            const hist2 = moodHistory().filter(e => e.date !== todayKeyLocal());
+            hist2.push({ date: todayKeyLocal(), score: mo.s });
+            try { localStorage.setItem('gharSaheliHisaab', JSON.stringify(hist2.slice(-60))); } catch (e) {}
+            try { if (navigator.vibrate) navigator.vibrate(15); } catch (e) {}
+            renderHisaab();
+            renderProactive(); // mood may change tomorrow's tone
+          }));
+        }
+
+        // ══ You're not alone — ambient anonymous collective ══
+        function renderCollective() {
+          const el = document.getElementById('aaj-collective');
+          if (!el) return;
+          // An ambient, honest framing — not a fake live counter. It reflects a
+          // real truth (millions of homemakers) without pretending to measure it.
+          const lines = [
+            'Aaj aap jaisi laakhon saheliyan ghar sambhal rahi hain. Aap akeli nahi hain 🌸',
+            'Har ghar mein ek superwoman hai — aaj woh aap hain ❤️',
+            'Aap jaisi anginat saheliyan aaj bhi sab sambhal rahi hain. Saath hain hum 🤝'
+          ];
+          const idx = new Date().getDate() % lines.length;
+          el.textContent = lines[idx];
+        }
+
+        function renderExtras() { renderProactive(); renderHisaab(); renderCollective(); }
+        window.gsRenderAajExtras = renderExtras;
+
+        // ── Wire every dependent view to the real-time data bus, so ANY
+        //    data entry anywhere refreshes the whole relevant UI at once. ──
+        if (typeof window.gsSubscribe === 'function') {
+          window.gsSubscribe(null, () => {
+            try { if (window.refreshGharOverview) window.refreshGharOverview(); } catch (e) {}
+            try { if (window.gsRenderReminders) window.gsRenderReminders(); } catch (e) {}
+            try { render(); } catch (e) {}          // Aaj brief items
+            try { renderExtras(); } catch (e) {}     // proactive + hisaab + collective
+          });
+        }
+
         render();
-        setTimeout(render, 600); // re-render after other engines seed state
+        renderExtras();
+        setTimeout(() => { render(); renderExtras(); }, 600); // re-render after other engines seed state
       })();
 
       // ══════════════════════════════════════════════════════════
