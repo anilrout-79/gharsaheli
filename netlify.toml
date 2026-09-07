@@ -1,0 +1,13 @@
+# Netlify config for GharSaheli AI
+# Lets the app keep calling /api/claude while the function lives at
+# /.netlify/functions/claude — no code change needed in index.html.
+
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+[[redirects]]
+  from = "/api/claude"
+  to = "/.netlify/functions/claude"
+  status = 200
+  force = true

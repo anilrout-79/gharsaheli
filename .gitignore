@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Env & secrets — NEVER commit your API key
+.env
+.env.*
+*.key
+
+# Build/host artifacts
+.vercel/
+.netlify/
+dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

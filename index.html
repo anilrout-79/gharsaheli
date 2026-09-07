@@ -7,11 +7,28 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="description" content="GharSaheli AI — Aap ghar sambhaliye. GharSaheli planning sambhalegi." />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <title>GharSaheli AI — Aap ghar sambhaliye</title>
+  <script>
+    /* ── AI backend config ──
+       When deployed with the serverless proxy (Vercel/Netlify), the app calls
+       your own endpoint which safely holds the API key. If the proxy isn't
+       available, AI features fall back gracefully (no key is ever in this file).
+       To use your proxy: set window.GS_AI_ENDPOINT to its URL (default '/api/claude'). */
+    window.GS_AI_ENDPOINT = '/api/claude';
+    window.gsAIFetch = function (payload) {
+      return fetch(window.GS_AI_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -96,8 +113,7 @@
 
       /* Derive spoken language from the location chosen at onboarding.
          Priority: explicit language toggle (gsLang) > city/state mapping > Hindi. */
-      window.gsLocationLang = function () {
-        // 0) manual override from Settings wins over everything
+      window.gsLocationLang = function () {        // 0) manual override from Settings wins over everything
         try { var ov = JSON.parse(localStorage.getItem('gsVoiceLang') || '""'); if (ov && ov !== 'auto') return ov; } catch (e) {}
         // 1) explicit language selection wins if user set it
         try {
@@ -19476,14 +19492,11 @@
       if (!cached || cached.day !== t) {
         (async () => {
           try {
-            const resp = await fetch('https://api.anthropic.com/v1/messages', {
-              method: 'POST', headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
+            const resp = await window.gsAIFetch({
                 model: 'claude-sonnet-4-6', max_tokens: 300,
                 tools: [{ type: 'web_search_20250305', name: 'web_search' }],
                 messages: [{ role: 'user', content: 'Search today\'s gold rate in India. Reply ONLY as compact JSON, no markdown: {"d24":<24K per 10 gram number>,"d22":<22K per 10 gram number>,"silver":<silver per kg number>,"date":"<DD Mon YYYY>"}' }]
-              })
-            });
+              });
             if (!resp.ok) return;
             const data = await resp.json();
             const txt = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join(' ');
@@ -20077,11 +20090,7 @@
       try {
         const msgs = history.slice(-8).map(m => ({ role: m.role, content: m.content }));
         msgs.push({ role: 'user', content: userText });
-        const resp = await fetch('https://api.anthropic.com/v1/messages', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 400, system: sys, messages: msgs })
-        });
+        const resp = await window.gsAIFetch({ model: 'claude-sonnet-4-6', max_tokens: 400, system: sys, messages: msgs });
         if (!resp.ok) throw new Error('api ' + resp.status);
         const data = await resp.json();
         const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join(' ').trim();
@@ -20846,25 +20855,28 @@
 
     /* ══════ #2 PWA: inline manifest + service worker + install ══════ */
     (function pwa() {
-      // inline manifest via blob
+      // Prefer a real manifest.json in the repo; fall back to an inline blob
+      // (so install still works even when opened as a single file).
       try {
-        const icon = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"><rect width="512" height="512" rx="96" fill="#C65D3A"/><text x="50%" y="54%" font-size="300" text-anchor="middle" dominant-baseline="middle">🌸</text></svg>');
-        const manifest = {
-          name: 'GharSaheli AI', short_name: 'GharSaheli', start_url: '.', display: 'standalone',
-          background_color: '#FBF7F0', theme_color: '#C65D3A',
-          description: 'Aap ghar sambhaliye. GharSaheli planning sambhalegi.',
-          icons: [{ src: icon, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }]
-        };
-        const mBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
-        const mLink = document.createElement('link'); mLink.rel = 'manifest'; mLink.href = URL.createObjectURL(mBlob);
-        document.head.appendChild(mLink);
+        const hasFileManifest = document.querySelector('link[rel="manifest"]');
+        if (!hasFileManifest) {
+          const icon = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512"><rect width="512" height="512" rx="96" fill="#C65D3A"/><text x="50%" y="54%" font-size="300" text-anchor="middle" dominant-baseline="middle">🌸</text></svg>');
+          const manifest = {
+            name: 'GharSaheli AI', short_name: 'GharSaheli', start_url: '.', display: 'standalone',
+            background_color: '#FBF7F0', theme_color: '#C65D3A',
+            description: 'Aap ghar sambhaliye. GharSaheli planning sambhalegi.',
+            icons: [{ src: icon, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }]
+          };
+          const mBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+          const mLink = document.createElement('link'); mLink.rel = 'manifest'; mLink.href = URL.createObjectURL(mBlob);
+          document.head.appendChild(mLink);
+        }
       } catch (e) {}
-      // inline service worker via blob (offline shell caching)
+      // Register a real sw.js (same-origin) for proper offline caching + scope.
+      // Silently no-ops if the file isn't present (e.g. opened via file://).
       try {
-        if ('serviceWorker' in navigator) {
-          const swCode = "self.addEventListener('install',e=>self.skipWaiting());self.addEventListener('activate',e=>self.clients.claim());self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(caches.open('gs-v1').then(c=>c.match(e.request).then(r=>r||fetch(e.request).then(res=>{try{c.put(e.request,res.clone())}catch(x){}return res}).catch(()=>caches.match('./')))))});";
-          const swBlob = new Blob([swCode], { type: 'text/javascript' });
-          navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(() => {});
+        if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+          navigator.serviceWorker.register('sw.js').catch(() => {});
         }
       } catch (e) {}
       // install prompt

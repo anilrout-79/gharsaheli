@@ -1,0 +1,17 @@
+{
+  "name": "GharSaheli AI",
+  "short_name": "GharSaheli",
+  "description": "Aap ghar sambhaliye. GharSaheli planning sambhalegi.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF7F0",
+  "theme_color": "#C65D3A",
+  "lang": "hi",
+  "categories": ["lifestyle", "productivity", "health"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
